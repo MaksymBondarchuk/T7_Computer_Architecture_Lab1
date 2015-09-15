@@ -63,14 +63,22 @@ string Decoder::decode_one_symbol(string code) {
 }
 
 string Decoder::decode(string code) {
-    size_t pos_word;
-    while ((pos_word = code.find("       ")) != string::npos) {
-        string word = code.substr(0, pos_word);
-        cout << word << endl;
-        code.erase(0, pos_word + 7);
-    }
+    string result;
 
-    return "";
+    vector<string> words = decode_with_split(code, "       ");
+    for (int i = 0; i < words.size(); i++) {
+        vector<string> letters = decode_with_split(words[i], "   ");
+
+        for (int j = 0; j < letters.size(); j++) {
+            string human_letter = decode_one_symbol(letters[j]);
+            if (human_letter == "")
+                return "";
+            result += human_letter;
+        }
+
+        result += ' ';
+    }
+    return result;
 }
 
 
