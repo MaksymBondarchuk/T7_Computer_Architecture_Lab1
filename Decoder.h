@@ -34,7 +34,7 @@ public:
 
     string encode(string symbol);
 
-    string decode_with_split(string word, string split_by);
+    vector<string> decode_with_split(string str, string split_by);
 };
 
 
