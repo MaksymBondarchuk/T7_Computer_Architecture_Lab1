@@ -1,12 +1,14 @@
 #include <iostream>
-#include "Morse_alphabet.h"
+#include "Decoder.h"
 
 using namespace std;
 
 
 int main() {
-    Morse_alphabet m_a = Morse_alphabet();
+    Decoder d = Decoder();
 
-//    cout << m_a.encode("A") << endl;
-    cout << m_a.decode("...") << m_a.decode("---") << m_a.decode("...") << endl;
+    cout << d.decode("Liubych       sss       Asad");
+
+//    cout << m_a.encode_one_symbol("A") << endl;
+//    cout << m_a.decode_one_symbol("...") << m_a.decode_one_symbol("---") << m_a.decode_one_symbol("...") << endl;
 }
