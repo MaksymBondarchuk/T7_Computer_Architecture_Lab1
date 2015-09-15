@@ -3,6 +3,7 @@
 //
 
 #include "Decoder.h"
+#include <algorithm>
 
 Decoder::Decoder() {
     alphabet = vector<morse_symbol>();
@@ -82,8 +83,25 @@ string Decoder::decode(string code) {
 }
 
 
-string Decoder::encode(string symbol) {
-    return "";
+string Decoder::encode(string str) {
+    string result;
+
+    transform(str.begin(), str.end(),str.begin(), ::toupper);
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] == ' ')
+            result += "       ";    // 7 spaces
+        else {
+            string current_letter;
+            current_letter += str[i];
+            result += encode_one_symbol(current_letter);
+
+            if (i + 1 < str.length() && str[i + 1] != ' ')
+                result += "   ";    // 3 spaces
+        }
+
+    }
+
+    return result;
 }
 
 vector<string> Decoder::decode_with_split(string str, string split_by) {

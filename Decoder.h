@@ -32,7 +32,7 @@ public:
 
     string decode(string code);
 
-    string encode(string symbol);
+    string encode(string str);
 
     vector<string> decode_with_split(string str, string split_by);
 };
