@@ -1,23 +1,24 @@
 #include <iostream>
-#include "Decoder.h"
+#include <fstream>
+#include "Decoder/Decoder.h"
 
 using namespace std;
 
 
 int main() {
+    ifstream file("text.txt");
+//    string str((std::istreambuf_iterator<char>(ifs)),
+//               (std::istreambuf_iterator<char>()));
+//    cout << str << endl;
+    string s;
+    file >> s;
+    cout << s << endl;
+
+
     Decoder d = Decoder();
-
-//    vector<string> v = d.decode_with_split(". . .   - - -   . . .", "   ");
-//    for (unsigned int i = 0; i < v.size(); i++)
-//        cout << v[i] << endl;
-
-//    cout << d.encode(d.decode(". . .   - - -   . . .")) << endl;
-    cout << d.encode("Some text") << endl;
-    cout << d.decode(". . .   - - -   - -   .       -   .   - . . -   -") << endl;
-
-
-//    cout << m_a.encode_one_symbol("A") << endl;
-//    cout << m_a.decode_one_symbol("...") << m_a.decode_one_symbol("---") << m_a.decode_one_symbol("...") << endl;
+    string tmp = d.encode("Dimitrijjj loves Asad and   ISIS");
+//    cout << tmp << endl;
+//    cout << d.decode(tmp) << endl;
 
     return 0;
 }
