@@ -1,24 +1,21 @@
 #include <iostream>
-#include <fstream>
 #include "Decoder/Decoder.h"
+#include <chrono>
 
 using namespace std;
 
-
 int main() {
-    ifstream file("text.txt");
-//    string str((std::istreambuf_iterator<char>(ifs)),
-//               (std::istreambuf_iterator<char>()));
-//    cout << str << endl;
-    string s;
-    file >> s;
-    cout << s << endl;
-
 
     Decoder d = Decoder();
-    string tmp = d.encode("Dimitrijjj loves Asad and   ISIS");
-//    cout << tmp << endl;
-//    cout << d.decode(tmp) << endl;
+
+    auto begin = std::chrono::high_resolution_clock::now();
+
+//        d.code_file("etext.txt", "dtext.txt", true);    // Encode
+    d.code_file("dtext.txt", "etext.txt", false);       // Decode
+
+    auto end = chrono::high_resolution_clock::now();
+    double time = chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / 1000000000.0;
+    cout << "Worked for " <<  time << " s" << endl;
 
     return 0;
 }

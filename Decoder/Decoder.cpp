@@ -4,6 +4,7 @@
 
 #include "Decoder.h"
 #include <algorithm>
+#include <fstream>
 
 Decoder::Decoder() {
     alphabet = vector<morse_symbol>();
@@ -101,7 +102,7 @@ string Decoder::decode(string code) {
 string Decoder::encode(string str) {
     string result;
 
-    transform(str.begin(), str.end(),str.begin(), ::toupper);
+    transform(str.begin(), str.end(), str.begin(), ::toupper);
     for (int i = 0; i < str.length(); i++) {
         if (str[i] == ' ')
             result += ".......";    // 7 spaces
@@ -130,4 +131,21 @@ vector<string> Decoder::decode_with_split(string str, string split_by) {
     res.push_back(str);
 
     return res;
+}
+
+void Decoder::code_file(string to, string from, bool encrypt) {
+    ifstream fin(from);
+    ofstream fout(to);
+
+    while (!fin.eof()) {
+        string line;
+        getline(fin, line, '\n');
+        if (encrypt)
+            fout << encode(line) << endl;
+        else
+            fout << decode(line) << endl;
+    }
+
+    fin.close();
+    fout.close();
 }
