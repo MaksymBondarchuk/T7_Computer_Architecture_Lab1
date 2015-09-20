@@ -70,6 +70,11 @@ Decoder::Decoder() {
 }
 
 string Decoder::encode_one_symbol(string symbol) {
+    if (1 < symbol.length())
+        return "";
+
+    transform(symbol.begin(), symbol.end(), symbol.begin(), ::toupper);
+
     for (unsigned int i = 0; i < alphabet.size(); i++)
         if (alphabet[i].symbol == symbol)
             return alphabet[i].code;
@@ -88,12 +93,13 @@ string Decoder::decode_one_symbol(string code) {
 string Decoder::decode(string code) {
     string result;
 
-    vector<string> words = decode_with_split(code, ".......");  // 7 units
+    vector<string> words = split(code, ".......");  // 7 units
     for (int i = 0; i < words.size(); i++) {
-        vector<string> letters = decode_with_split(words[i], "...");    // 3 units
+        vector<string> letters = split(words[i], "...");    // 3 units
         for (int j = 0; j < letters.size(); j++)
             result += decode_one_symbol(letters[j]);
-        result += ' ';
+        if (i + 1 < words.size())
+            result += ' ';
     }
     return result;
 }
@@ -102,7 +108,6 @@ string Decoder::decode(string code) {
 string Decoder::encode(string str) {
     string result;
 
-    transform(str.begin(), str.end(), str.begin(), ::toupper);
     for (int i = 0; i < str.length(); i++) {
         if (str[i] == ' ')
             result += ".......";    // 7 spaces
@@ -114,13 +119,12 @@ string Decoder::encode(string str) {
             if (i + 1 < str.length() && str[i + 1] != ' ')
                 result += "...";    // 3 spaces
         }
-
     }
 
     return result;
 }
 
-vector<string> Decoder::decode_with_split(string str, string split_by) {
+vector<string> Decoder::split(string str, string split_by) {
     vector<string> res = vector<string>();
 
     size_t pos;

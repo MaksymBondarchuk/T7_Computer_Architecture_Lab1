@@ -34,7 +34,7 @@ public:
 
     string encode(string str);
 
-    vector<string> decode_with_split(string str, string split_by);
+    vector<string> split(string str, string split_by);
 
     void code_file(string to, string from, bool encrypt);
 };

@@ -17,5 +17,6 @@ int main() {
     double time = chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / 1000000000.0;
     cout << "Worked for " <<  time << " s" << endl;
 
+//    cout << d.decode("-.-.-...---.---.---...---.---...-.......---...-...---.-.-.---...---") << endl;
     return 0;
 }
