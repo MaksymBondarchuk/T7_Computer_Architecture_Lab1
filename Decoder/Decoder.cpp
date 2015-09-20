@@ -9,6 +9,7 @@
 Decoder::Decoder() {
     alphabet = vector<morse_symbol>();
 
+    // Letters
     alphabet.push_back(morse_symbol("A", "-.---"));
     alphabet.push_back(morse_symbol("B", "---.-.-.-"));
     alphabet.push_back(morse_symbol("C", "----.-.---.-"));
@@ -36,6 +37,7 @@ Decoder::Decoder() {
     alphabet.push_back(morse_symbol("Y", "---.-.---.---"));
     alphabet.push_back(morse_symbol("Z", "---.---.-.-"));
 
+    // Numbers
     alphabet.push_back(morse_symbol("1", "-.---.---.---.---"));
     alphabet.push_back(morse_symbol("2", "-.-.---.---.---"));
     alphabet.push_back(morse_symbol("3", "-.-.-.---.---"));
@@ -47,6 +49,7 @@ Decoder::Decoder() {
     alphabet.push_back(morse_symbol("9", "---.---.---.---.-"));
     alphabet.push_back(morse_symbol("0", "---.---.---.---.---"));
 
+    // Special symbols
     alphabet.push_back(morse_symbol("\"", "-.---.-.-.---.-"));          // .-..-.
     alphabet.push_back(morse_symbol("$", "-.-.-.---.-.-.---"));         // ...-..-
     alphabet.push_back(morse_symbol("'", "-.---.---.---.---.-"));       // .----.
@@ -70,35 +73,42 @@ Decoder::Decoder() {
 }
 
 string Decoder::encode_one_symbol(string symbol) {
-    if (1 < symbol.length())
+    if (1 < symbol.length())    // Must be one and only one symbol
         return "";
 
+    // Transforming symbol to uppercase
     transform(symbol.begin(), symbol.end(), symbol.begin(), ::toupper);
 
+    // Looking for symbol in alphabet
     for (unsigned int i = 0; i < alphabet.size(); i++)
         if (alphabet[i].symbol == symbol)
             return alphabet[i].code;
 
+    // If didn't find it
     return "";
 }
 
 string Decoder::decode_one_symbol(string code) {
+    // Looking for code in alphabet
     for (unsigned int i = 0; i < alphabet.size(); i++)
         if (alphabet[i].code == code)
             return alphabet[i].symbol;
 
+    // If no such code
     return "";
 }
 
 string Decoder::decode(string code) {
     string result;
 
+    // Split to words
     vector<string> words = split(code, ".......");  // 7 units
     for (int i = 0; i < words.size(); i++) {
+        // Split to letters
         vector<string> letters = split(words[i], "...");    // 3 units
         for (int j = 0; j < letters.size(); j++)
             result += decode_one_symbol(letters[j]);
-        if (i + 1 < words.size())
+        if (i + 1 < words.size())   // If not a lats word
             result += ' ';
     }
     return result;
@@ -109,14 +119,14 @@ string Decoder::encode(string str) {
     string result;
 
     for (int i = 0; i < str.length(); i++) {
-        if (str[i] == ' ')
+        if (str[i] == ' ')  // Space between words is 7 units
             result += ".......";    // 7 spaces
         else {
-            string current_letter;
+            string current_letter;  // To create string from char
             current_letter += str[i];
             result += encode_one_symbol(current_letter);
 
-            if (i + 1 < str.length() && str[i + 1] != ' ')
+            if (i + 1 < str.length() && str[i + 1] != ' ')  // If not a last letter. Space between letters in 3 units
                 result += "...";    // 3 spaces
         }
     }
@@ -129,10 +139,10 @@ vector<string> Decoder::split(string str, string split_by) {
 
     size_t pos;
     while ((pos = str.find(split_by)) != string::npos) {
-        res.push_back(str.substr(0, pos));
-        str.erase(0, pos + split_by.length());
+        res.push_back(str.substr(0, pos));      // Adding string
+        str.erase(0, pos + split_by.length());  // Deleting it from str
     }
-    res.push_back(str);
+    res.push_back(str);     // Adding last part
 
     return res;
 }
@@ -141,10 +151,10 @@ void Decoder::code_file(string to, string from, bool encrypt) {
     ifstream fin(from);
     ofstream fout(to);
 
-    while (!fin.eof()) {
+    while (!fin.eof()) {    // Do it line by line
         string line;
         getline(fin, line, '\n');
-        if (encrypt)
+        if (encrypt)        // Encryption or decryption
             fout << encode(line) << endl;
         else
             fout << decode(line) << endl;
