@@ -148,8 +148,15 @@ vector<string> Decoder::split(string str, string split_by) {
 }
 
 void Decoder::code_file(string to, string from, bool encrypt) {
-    ifstream fin(from);
-    ofstream fout(to);
+    string path = "/home/max/Documents/ClionProjects/T7.Computer_Architecture_Lab1/";
+    string _fin = path;
+    _fin += from;
+    string _fout = path;
+    _fout += to;
+    ifstream fin(_fin);
+    ofstream fout(_fout);
+//    ifstream fin(from);
+//    ofstream fout(to);
 
     while (!fin.eof()) {    // Do it line by line
         string line;

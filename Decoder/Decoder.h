@@ -22,7 +22,7 @@ class Decoder {
         }
     };
 
-    // Internation Morse alphabet
+    // International Morse alphabet
     vector<morse_symbol> alphabet;
 
 public:
