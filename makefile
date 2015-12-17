@@ -3,4 +3,3 @@ all:
 
 gprof:
 		gprof main gmon.out > report.txt
-
